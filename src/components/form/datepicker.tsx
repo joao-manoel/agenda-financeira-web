@@ -24,7 +24,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLInputElement, DatePicker
         render={({ field: { ref, onChange, value, ...rest } }) => (
           <>
             <DatePicker
-              className={`w-full text-center border-2 bg-zinc-100 rounded-md text-2xl placeholder:font-thin p-2 ${error && 'border-red-300 '}`}
+              className={`w-full text-center bg-zinc-100 rounded-md text-2xl placeholder:font-thin p-2 ${error ? ' border-2 border-red-300 ' : 'border-transparent'}`}
               selected={value}
               onChange={onChange}
               dateFormat="dd/MM/yyyy"
