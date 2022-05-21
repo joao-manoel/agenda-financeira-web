@@ -8,20 +8,22 @@ const Home: NextPage = () => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="w-full bg-indigo-700 h-full">
+      <div className="w-full bg-indigo-700">
         <Header />
       </div>
-      <div className="w-full h-fullflex md:justify-between md:flex-row flex-col">
-        <div className="w-full h-9 my-4 md:w-2/5 md:h-full  m-auto">
+      <div className="w-full flex  flex-col">
+        <div className="w-full h-9 my-4 xl:w-2/5 m-auto">
           <header className="flex justify-center flex-col items-center gap-y-2">
-            
-
             <FormAddExpense />
           </header>
-          <h1 className="py-[1px] px-2 font-light text-sm text-center">Transações</h1>
+          <h1 className="py-[1px] px-2 font-light text-sm text-center">Despesas</h1>
           <TransactionList />
         </div>
       </div>
+
+      <footer className="text-center p-4 font-thin hidden">
+        Feito com muito ♥️ by João Manoel
+      </footer>
     </div>
   );
 };

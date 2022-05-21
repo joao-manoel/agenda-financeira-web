@@ -14,11 +14,15 @@ type ExpenseData = {
   pay_at: Date;
 };
 
-const FormExpenseDataSchema = yup.object().shape({});
+const FormExpenseDataSchema = yup.object().shape({
+  title: yup.string().required('Titulo é obrigatório.'),
+  price: yup.number().required('Valor é obrigatório.'),
+  pay_at: yup.date().required('A Data de vencimento é obrigatória.')
+});
 
 export const FormAddExpense = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { wallet, addExpense } = useWallet();
+  const { addExpense } = useWallet();
   const {
     register,
     handleSubmit,
@@ -45,22 +49,24 @@ export const FormAddExpense = () => {
     <div className="w-full p-2">
       <form className="flex flex-col gap-y-2 w-full" onSubmit={handleSubmit(handleRegisterExpenseRequest)}>
         <Input
-          className="w-full text-2xl py-2 px-4 placeholder:font-thin text-center border-none bg-zinc-100 rounded-md"
+          className={`${errors.title ? 'border-red-300' : 'border-transparent'} w-full border-2 text-2xl py-2 px-4 placeholder:font-thin text-center bg-zinc-100 rounded-md `}
           onClick={() => setIsExpanded(true)}
           control={control}
           type="text"
-          name=""
+          name="title"
+          error={errors.title}
           placeholder={isExpanded ? 'Titulo...' : 'Clique Aqui para inserir uma nova despesa...'}
           {...register("title")}
         />
         {isExpanded && (
           <>
-            <div className="flex flex-col gap-y-2 w-full  sm:flex-row sm:gap-x-2 ">
+            <div className="flex flex-col gap-y-2 w-full  xl:flex-row xl:gap-x-2 ">
               <Input
-                className="w-full text-center border-none placeholder:font-thin bg-zinc-100 rounded-md text-2xl border-2"
+                className={`${errors.price ? 'border-red-300' : 'border-transparent'} w-full text-center placeholder:font-thin bg-zinc-100 rounded-md text-2xl border-2`}
                 control={control}
                 type="number"
                 name="price"
+                error={errors.price}
                 placeholder="Valor"
                 {...register("price")}
               />
@@ -68,6 +74,7 @@ export const FormAddExpense = () => {
                 control={control}
                 type="datepicker"
                 name="pay_at"
+                error={errors.pay_at}
                 placeholder="Pagar Quando?"
                 {...register("pay_at")}
               />

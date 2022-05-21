@@ -16,7 +16,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLInputElement, DatePicker
   ref
 ) => {
   return (
-    <>
+    <div className="relative w-full">
       <Controller
         name={name}
         control={control}
@@ -24,21 +24,20 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLInputElement, DatePicker
         render={({ field: { ref, onChange, value, ...rest } }) => (
           <>
             <DatePicker
-              className="w-full text-center border-none bg-zinc-100 rounded-md text-2xl placeholder:font-thin p-2 border-2"
+              className={`w-full text-center border-2 bg-zinc-100 rounded-md text-2xl placeholder:font-thin p-2 ${error && 'border-red-300 '}`}
               selected={value}
               onChange={onChange}
               dateFormat="dd/MM/yyyy"
-              placeholderText="Pagar Quando?"
+              placeholderText="Data de Vencimento"
               {...rest}
               ref={ref}
+              showPreviousMonths={false}
+              
             />
-            {!!error && (
-              <span className="text-red-500 text-sm">{error.message}</span>
-            )}
           </>
         )}
       />
-    </>
+    </div>
   );
 };
 
