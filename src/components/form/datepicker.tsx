@@ -22,19 +22,20 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLInputElement, DatePicker
         control={control}
         defaultValue={""}
         render={({ field: { ref, onChange, value, ...rest } }) => (
-          <div>
+          <>
             <DatePicker
-              className="border-zinc-300 border-2 rounded-md px-2 py-[2px] w-full md:w-32"
+              className="w-full text-center border-none bg-zinc-100 rounded-md text-2xl placeholder:font-thin p-2 border-2"
               selected={value}
               onChange={onChange}
               dateFormat="dd/MM/yyyy"
+              placeholderText="Pagar Quando?"
               {...rest}
               ref={ref}
             />
             {!!error && (
               <span className="text-red-500 text-sm">{error.message}</span>
             )}
-          </div>
+          </>
         )}
       />
     </>

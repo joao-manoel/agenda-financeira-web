@@ -44,7 +44,7 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
 
   const addExpense = (data: Expense) => {
     const id = uuidv4()
-    const newExpense = [...wallet, {id,...data}]
+    const newExpense = [...wallet, {id, pay_at: new Date(data.pay_at),...data}]
     setCookie(undefined, 'carteira.wallet', JSON.stringify(newExpense), _optionsCookies)
     setWallet(newExpense)
 

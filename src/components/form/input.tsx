@@ -21,12 +21,12 @@ const InputComponent: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         control={control}
         defaultValue={""}
         render={({ field: { ref, ...rest } }) => (
-          <div>
+          <>
             <input id={name} {...inputRest} {...rest} ref={ref} />
             {!!error && (
-              <span className="text-red-500 text-sm">{error.message}</span>
+              <span className="text-red-500 text-sm absolute">{error.message}</span>
             )}
-          </div>
+          </>
         )}
       />
     </>

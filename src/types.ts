@@ -3,5 +3,5 @@ export interface Expense {
   title: string
   price: number
   is_paid: boolean
-  pay_at: string
+  pay_at: Date
 }

@@ -1,29 +1,29 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
 
-import { ListExpense } from '../components/listExpense'
-import { Header } from '../components/Header'
-import { useWallet } from '../hooks/useWallet'
-import { ModalAddExpense } from '../components/ModalAddExpense'
-import { useState } from 'react'
-import { ExpenseCalc } from '../components/ExpenseCalc'
-
-
+import { TransactionList } from "../components/TransactionList";
+import { FormAddExpense } from "../components/FormAddExpense";
+import { Header } from "../components/Header";
 
 const Home: NextPage = () => {
-  const [isOpenModalAddExpense, setIsOpenModalAddExpense] = useState<boolean>(false)
-  const {wallet, addExpense} = useWallet()
 
   return (
-    <div>
-      <Header />
-      <ModalAddExpense isOpen={isOpenModalAddExpense}  setIsOpen={setIsOpenModalAddExpense}/>
-      <ExpenseCalc />
-      <button 
-        onClick={(() => setIsOpenModalAddExpense(true))}
-        className="w-52 p-4 bg-slate-800 my-4 m-auto flex justify-center rounded-md">Registrar Nova Despesa</button>
-      <ListExpense data={wallet} />
-    </div>
-  )
-}
+    <div className="w-full flex flex-col">
+      <div className="w-full bg-indigo-700 h-full">
+        <Header />
+      </div>
+      <div className="w-full h-fullflex md:justify-between md:flex-row flex-col">
+        <div className="w-full h-9 my-4 md:w-2/5 md:h-full  m-auto">
+          <header className="flex justify-center flex-col items-center gap-y-2">
+            
 
-export default Home
+            <FormAddExpense />
+          </header>
+          <h1 className="py-[1px] px-2 font-light text-sm text-center">Transações</h1>
+          <TransactionList />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
