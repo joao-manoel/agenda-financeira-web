@@ -29,6 +29,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLInputElement, DatePicker
               onChange={onChange}
               dateFormat="dd/MM/yyyy"
               placeholderText="Data de Vencimento"
+              autoComplete="off"
               {...rest}
               ref={ref}
               showPreviousMonths={false}

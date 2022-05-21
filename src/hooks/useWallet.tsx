@@ -61,8 +61,7 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
   
   const ExpenseByMonth = wallet.filter(expense => {
     const getMonth = new Date(expense.pay_at).getMonth() + 1
-    console.log('mes selecionado >', month)
-    console.log('mes do data >', getMonth)
+    
     if(month === getMonth){
       return expense
     }

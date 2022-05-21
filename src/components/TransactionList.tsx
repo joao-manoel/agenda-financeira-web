@@ -1,14 +1,24 @@
-import { ChevronLeftIcon, ChevronRightIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PencilAltIcon,
+  TrashIcon,
+} from "@heroicons/react/solid";
 import { useState } from "react";
 
 import { useWallet } from "../hooks/useWallet";
-import { isDateDefeated, dateFormat, SortDate, monthNames } from "../utils/date";
+import {
+  isDateDefeated,
+  dateFormat,
+  SortDate,
+  monthNames,
+} from "../utils/date";
 import { formatPrice } from "../utils/formatPrice";
 import { MonthNavigation } from "./MonthNavigation";
 
 export const TransactionList = () => {
-  const [hashOptions, setHashOptions] = useState<string>("")
-  const { ExpenseByMonth, toggleExpense, loading } = useWallet()
+  const [hashOptions, setHashOptions] = useState<string>("");
+  const { ExpenseByMonth, toggleExpense, loading } = useWallet();
 
   const handleHashOptions = (id: string) => {
     if (id === hashOptions) {
@@ -18,19 +28,17 @@ export const TransactionList = () => {
     }
   };
 
-  if (loading) return <h1>Carregando</h1>
+  if (loading) return <h1>Carregando</h1>;
 
   return (
     <section className="flex flex-col gap-y-2 p-2 relative">
       <MonthNavigation />
       {ExpenseByMonth.length !== 0 ? (
-        ExpenseByMonth
-        .sort(SortDate)
-        .sort((a, b) => {
-          return a.is_paid == b.is_paid ? 0 : !a.is_paid ? -1 : 1;
-        })
-        .map((expense) => (
-          <>
+        ExpenseByMonth.sort(SortDate)
+          .sort((a, b) => {
+            return a.is_paid == b.is_paid ? 0 : !a.is_paid ? -1 : 1;
+          })
+          .map((expense) => (
             <div
               key={expense.id}
               className={`${
@@ -84,10 +92,9 @@ export const TransactionList = () => {
                 </button>
               </section>
             </div>
-          </>
-        ))
+          ))
       ) : (
-        <h1>Sem Registro</h1>
+        <h1 className="text-center font-thin">Sem Registro</h1>
       )}
     </section>
   );
