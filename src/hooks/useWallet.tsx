@@ -12,7 +12,11 @@ interface WalletProviderProps {
 
 interface WalletContextData {
   wallet: Expense[]
+  ExpenseByMonth: Expense[]
   loading: boolean
+  month: number
+  handleNextMonth: () => void
+  handlePreviusMonth: () => void
   addExpense: (data: Expense) => void
   toggleExpense: (expenseId: string) => void
 }
@@ -27,6 +31,7 @@ const WalletContext = createContext<WalletContextData>({} as WalletContextData)
 export function WalletProvider({children}: WalletProviderProps): JSX.Element{
   const [wallet, setWallet] = useState<Expense[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [month, setMonth] = useState(() => new Date().getMonth() + 1)
 
   useEffect(() => {
     try{
@@ -40,7 +45,28 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
     }catch(err){
 
     }
-  }, []) 
+  }, [])
+
+  const handleNextMonth = () => {
+    if(month < 12) {
+      setMonth(month+1)
+    }
+  }
+
+  const handlePreviusMonth = () => {
+    if(month > 1) {
+      setMonth(month-1)
+    }
+  }
+  
+  const ExpenseByMonth = wallet.filter(expense => {
+    const getMonth = new Date(expense.pay_at).getMonth() + 1
+    console.log('mes selecionado >', month)
+    console.log('mes do data >', getMonth)
+    if(month === getMonth){
+      return expense
+    }
+  })
 
   const addExpense = (data: Expense) => {
     const id = uuidv4()
@@ -66,9 +92,13 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
 
   return(
     <WalletContext.Provider value={{
-      wallet, 
+      wallet,
+      ExpenseByMonth, 
       loading, 
       addExpense,
+      handleNextMonth,
+      handlePreviusMonth,
+      month,
       toggleExpense
     }}>
       {children}

@@ -11,12 +11,11 @@ const Home: NextPage = () => {
       <div className="w-full bg-indigo-700">
         <Header />
       </div>
-      <div className="w-full flex  flex-col">
+      <div className="w-full flex  flex-col p-4">
         <div className="w-full h-9 my-4 xl:w-2/5 m-auto">
           <header className="flex justify-center flex-col items-center gap-y-2">
             <FormAddExpense />
           </header>
-          <h1 className="py-[1px] px-2 font-light text-sm text-center">Despesas</h1>
           <TransactionList />
         </div>
       </div>

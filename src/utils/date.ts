@@ -1,4 +1,6 @@
-import { Expense } from "../types"
+export const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
 
 const dateFormatAux = (date: Date) => {
   var d = new Date(date),
@@ -16,19 +18,19 @@ export const dateFormat = (date: Date): string => {
   return dateFormatAux(date)
 }
 
-export const asDateDefeated = (date: Date): boolean => {
+export const isDateDefeated = (date: Date): boolean => {
 
   var dateExpense = new Date(date)
   var dateNow = new Date()
 
   if(dateExpense.getTime() < dateNow.getTime()){
     return true
-    }
+  }
 
   return false
 }
 
-export const SortDate = (a, b) => {
+export const SortDate = (a: any, b: any) => {
   const aDate = new Date(a.pay_at)
   const bDate = new Date(b.pay_at)
 
