@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/solid";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import { useWallet } from "../hooks/useWallet";
 import {
@@ -18,7 +19,7 @@ import { MonthNavigation } from "./MonthNavigation";
 
 export const TransactionList = () => {
   const [hashOptions, setHashOptions] = useState<string>("");
-  const { ExpenseByMonth, toggleExpense, loading } = useWallet();
+  const { ExpenseByMonth, toggleExpense, loading, removeExpense } = useWallet();
 
   const handleHashOptions = (id: string) => {
     if (id === hashOptions) {
@@ -84,10 +85,16 @@ export const TransactionList = () => {
                   hashOptions === expense.id ? "flex-block" : "hidden"
                 } right-1 -bottom-1 py-2 flex justify-end gap-x-2 absolute`}
               >
-                <button className="flex items-center text-white bg-red-400 py-[3px] px-2 rounded-md">
+                <button 
+                  className="flex items-center text-white bg-red-400 py-[3px] px-2 rounded-md"
+                  onClick={() => removeExpense(expense.id)}  
+                >
                   <TrashIcon className="h-5 " />
                 </button>
-                <button className="flex items-center text-white bg-zinc-800 py-[3px] px-2 rounded-md">
+                <button 
+                  className="flex items-center text-white bg-zinc-800 py-[3px] px-2 rounded-md"
+                  onClick={() => {toast.success('Função em desenvolvimento')}}
+                  >
                   <PencilAltIcon className="h-5 " />
                 </button>
               </section>

@@ -19,6 +19,7 @@ interface WalletContextData {
   handlePreviusMonth: () => void
   addExpense: (data: Expense) => void
   toggleExpense: (expenseId: string) => void
+  removeExpense: (expenseId: string) => void
 }
 
 const _optionsCookies = {
@@ -76,9 +77,9 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
     toast.success('Despesa Registrada')
   }
 
-  const toggleExpense = (expendeId: string) => {
+  const toggleExpense = (expenseId: string) => {
     const updateExpense = [...wallet].filter(e => {
-      if(e.id === expendeId){
+      if(e.id === expenseId){
         e.is_paid = !e.is_paid
       }
 
@@ -89,15 +90,26 @@ export function WalletProvider({children}: WalletProviderProps): JSX.Element{
     setWallet(updateExpense)
   }
 
+  const removeExpense = (expenseId: string) => {
+
+    const removeExpense = [...wallet].filter(e => {
+      return e["id"] !== expenseId
+    })
+
+    setCookie(undefined, 'carteira.wallet', JSON.stringify(removeExpense), _optionsCookies)
+    setWallet(removeExpense)
+  }
+
   return(
     <WalletContext.Provider value={{
       wallet,
       ExpenseByMonth, 
       loading, 
+      month,
+      removeExpense,
       addExpense,
       handleNextMonth,
       handlePreviusMonth,
-      month,
       toggleExpense
     }}>
       {children}
