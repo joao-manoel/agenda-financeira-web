@@ -2,7 +2,7 @@
 
 ## 📖 Overview
 
-Agenda Financeira is an application to help you manage your personal finances
+Agenda Financeira is an application to help you manage your personal finances.
 
 # Preview
 ![normal](https://user-images.githubusercontent.com/46303942/169671199-4ad87cef-81b2-48bf-a08b-99e0583bb721.png)
