@@ -4,14 +4,17 @@ import { TransactionList } from "../components/TransactionList";
 import { FormAddExpense } from "../components/FormAddExpense";
 import { Header } from "../components/Header";
 import { TotalExpense } from "../components/TotalExpense";
+import Head from "next/head";
 
 const Home: NextPage = () => {
 
   return (
     <div className="w-full flex flex-col">
+      <Head>
+        <title>Agenda Financeira Web</title>
+      </Head>
       <div className="w-full bg-indigo-700">
-        <Header />
-        
+        <Header />        
       </div>
       <div className="w-full flex  flex-col p-4">
         <div className="w-full h-9 my-4 xl:w-2/5 m-auto">
