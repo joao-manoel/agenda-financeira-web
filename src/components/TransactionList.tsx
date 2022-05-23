@@ -3,6 +3,7 @@ import {
   ChevronRightIcon,
   PencilAltIcon,
   TrashIcon,
+  XIcon,
 } from "@heroicons/react/solid";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -40,64 +41,76 @@ export const TransactionList = () => {
             return a.is_paid == b.is_paid ? 0 : !a.is_paid ? -1 : 1;
           })
           .map((expense) => (
-            <div
+            <div 
+              className="group flex gap-x-2 items-center"
               key={expense.id}
-              className={`${
-                hashOptions === expense.id
-                  ? " border-2 border-indigo-400"
-                  : "border-2 border-transparent"
-              } flex bg-white gap-x-2 items-center p-2 relative rounded-md`}
-              onClick={() => handleHashOptions(expense.id)}
             >
-              <input
-                checked={expense.is_paid}
-                onChange={() => toggleExpense(expense.id)}
-                type="checkbox"
-                className="ring-indigo-600 focus:border-indigo-600 h-6 w-6"
-              />
-              <section className="text-lg w-full">
-                <section className="flex justify-between w-full">
-                  <span
-                    className={`capitalize font-bold ${
-                      expense.is_paid && "line-through"
-                    }`}
-                  >
-                    {expense.title}
-                  </span>
-                  <span className={`${expense.is_paid && "line-through"}`}>
-                    {formatPrice(expense.price)}
-                  </span>
-                </section>
-                <span
-                  className={`text-sm ${
-                    !expense.is_paid
-                      ? isDateDefeated(expense.pay_at)
-                        ? "bg-red-200"
-                        : "bg-green-200"
-                      : "bg-zinc-200 line-through"
-                  }`}
-                >
-                  Vencimento: {dateFormat(expense.pay_at)}
-                </span>
-              </section>
-              <section
+              <div
                 className={`${
-                  hashOptions === expense.id ? "flex-block" : "hidden"
-                } right-1 -bottom-1 py-2 flex justify-end gap-x-2 absolute`}
+                  hashOptions === expense.id
+                    ? "border-2 border-transparent"
+                    : "border-2 border-transparent"
+                } flex bg-white gap-x-2 items-center p-2 relative rounded-md w-full`}
+              >
+                <input
+                  checked={expense.is_paid}
+                  onChange={() => toggleExpense(expense.id)}
+                  type="checkbox"
+                  className="ring-indigo-600 focus:border-indigo-600 h-6 w-6"
+                />
+                <section className="text-lg w-full">
+                  <div>
+                    <section className="flex justify-between w-full">
+                      <span
+                        className={`capitalize font-bold  w-full h-5 overflow-hidden ${
+                          expense.is_paid && "line-through"
+                        }`}
+                      >
+                        {expense.title}
+                      </span>
+                      <span className={`${expense.is_paid && "line-through"}`}>
+                        {formatPrice(expense.price)}
+                      </span>
+                    </section>
+                    <span
+                      className={`text-sm ${
+                        !expense.is_paid
+                          ? isDateDefeated(expense.pay_at)
+                            ? "bg-red-200"
+                            : "bg-green-200"
+                          : "bg-zinc-200 line-through"
+                      }`}
+                    >
+                      Vencimento: {dateFormat(expense.pay_at)}
+                    </span>
+                  </div>
+                </section>
+              </div>
+              <nav 
+                onClick={() => handleHashOptions(expense.id)}
+                className={`${hashOptions === expense.id ? 'w-48' : 'w-12 '} relative  h-20 rounded-md bg-white duration-300 flex justify-center items-center`}
               >
                 <button 
-                  className="flex items-center text-white bg-red-400 py-[3px] px-2 rounded-md"
-                  onClick={() => removeExpense(expense.id)}  
-                >
-                  <TrashIcon className="h-5 " />
+                  onClick={() => toast.error(expense.id)}
+                  className={`${hashOptions === expense.id ? 'w-10 h-10 -translate-x-11 flex items-center justify-center hover:bg-red-400 cursor-pointer text-zinc-700 hover:text-white' : 'w-2 h-2 -translate-y-3'} absolute bg-zinc-300 rounded-full duration-500 border-[2px]`}>
+                  {/* Feature */}
+                  <XIcon className={`${hashOptions === expense.id ? 'scale-100' : 'scale-0'} h-4 duration-700 `}/>
                 </button>
                 <button 
-                  className="flex items-center text-white bg-zinc-800 py-[3px] px-2 rounded-md"
-                  onClick={() => {toast.success('Função em desenvolvimento')}}
-                  >
-                  <PencilAltIcon className="h-5 " />
+                  onClick={() => toast.error(expense.id)}
+                  className={`${hashOptions === expense.id ? 'w-10 h-10 flex items-center justify-center hover:bg-green-400 cursor-pointer text-zinc-700 hover:text-white' : 'w-2 h-2 '} absolute bg-zinc-300 rounded-full duration-500 border-[2px]`}
+                >
+                  {/* Editar */}
+                  <PencilAltIcon className={`${hashOptions === expense.id ? 'scale-100' : 'scale-0'} h-4 duration-700`}/>
                 </button>
-              </section>
+                <button 
+                  onClick={() => removeExpense(expense.id)}
+                  className={`${hashOptions === expense.id ? 'w-10 h-10 translate-x-11 flex items-center justify-center hover:bg-red-400 cursor-pointer text-zinc-700 hover:text-white' : 'w-2 h-2 translate-y-3 '} absolute bg-zinc-300 rounded-full duration-500 border-[2px]`}
+                >
+                  {/* Deletar */}
+                  <TrashIcon className={`${hashOptions === expense.id ? 'scale-100' : 'scale-0'} h-4 duration-700 `} />
+                </button>
+              </nav>
             </div>
           ))
       ) : (
