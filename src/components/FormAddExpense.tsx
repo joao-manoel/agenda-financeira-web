@@ -7,27 +7,31 @@ import { Input } from "./form/input";
 import { useWallet } from "../hooks/useWallet";
 import { useState } from "react";
 import { DateSelect } from "./form/datepicker";
+import { CurrencyInput } from "./form/CurrencyInput";
+import { priceSanitizer } from "../utils/formatPrice";
 
 type ExpenseData = {
   title: string;
-  price: number;
+  price: string;
   pay_at: Date;
 };
 
 const FormExpenseDataSchema = yup.object().shape({
   title: yup.string().required('Titulo é obrigatório.'),
-  price: yup.number().required('Valor é obrigatório.'),
+  price: yup.string().required('Valor é obrigatório.'),
   pay_at: yup.date().required('A Data de vencimento é obrigatória.')
 });
 
 export const FormAddExpense = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { addExpense } = useWallet();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    reset
   } = useForm<ExpenseData>({
     resolver: yupResolver(FormExpenseDataSchema),
   });
@@ -37,12 +41,19 @@ export const FormAddExpense = () => {
     pay_at,
     price,
   }) => {
+
     addExpense({
       title,
       is_paid: false,
       pay_at,
-      price,
+      price: priceSanitizer(price),
     });
+
+    reset({
+      title: '',
+      price: '',
+      pay_at: new Date()
+    })
   };
 
   return (
@@ -61,10 +72,10 @@ export const FormAddExpense = () => {
         {isExpanded && (
           <>
             <div className="flex flex-col gap-y-2 w-full  xl:flex-row xl:gap-x-2 ">
-              <Input
+              <CurrencyInput
                 className={`${errors.price ? 'border-red-300' : 'border-transparent'} w-full text-center placeholder:font-thin bg-zinc-100 rounded-md text-2xl border-2`}
                 control={control}
-                type="number"
+                type="text"
                 name="price"
                 error={errors.price}
                 placeholder="Valor"
